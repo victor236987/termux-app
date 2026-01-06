@@ -1,0 +1,132 @@
+vixzeiss
+import random
+import time
+def display_intro():
+print("🔥 Welcome to GTA: Lagos!")
+print("You play as 'Ade', a street-smart hustler in Lagos.")
+time.sleep(1)
+def display_status(health, money):
+print(f"\nHealth: {health} | Money: ₦{money}")
+def display_menu():
+print("\n📍 You're in Lagos Island.")
+print("1. 🌆 Hit a store (rob, +₦1000, -20 health risk)")
+print("2. 🚕 Drive taxi (earn ₦500)")
+print("3. 🔧 Visit mechanic (-₦200, +20 health)")
+print("4. 📜 Check missions")
+print("5. 🏃‍♂️ Explore city")
+print("6. 👥 Meet contacts")
+print("7. 💸 Check bank")
+print("8. 🏠 Go home")
+def hit_store(health, money):
+print("You hit a store in Victoria Island...")
+time.sleep(1)
+if random.random() < 0.2:
+health -= 20
+print("🔫 Got shot during the heist! -20 health")
+else:
+money += 1000
+print("💸 Robbery successful! +₦1000")
+return health, money
+def drive_taxi(money):
+print("You drive a taxi in Lekki...")
+time.sleep(1)
+money += 500
+print("🚕 Taxi ride complete! +₦500")
+return money
+def visit_mechanic(health, money):
+if money >= 200:
+money -= 200
+health += 20
+print("🔧 Car fixed! +20 health")
+else:
+print("😅 Not enough money")
+return health, money
+def check_missions(missions, health, money):
+print("\n📜 Missions:")
+for i, m in enumerate(missions):
+print(f"{i+1}. {m['name']} (+₦{m['reward']}, -{m['risk']} risk)")
+print(f"   {m['desc']}")
+mission_choice = int(input("Choose mission (1-3): ")) - 1
+mission = missions[mission_choice]
+print(f"\n🚀 Mission: {mission['name']}")
+time.sleep(1)
+if random.random() < 0.5:
+health -= mission['risk']
+print(f"🚨 It was risky! -{mission['risk']} health")
+money += mission['reward']
+print(f"🎉 Mission complete! +₦{mission['reward']}")
+return health, money
+def explore_city():
+print("You explore Lagos...")
+time.sleep(1)
+places = ["beach in Marina", "market in Ajegunle", "nightclub in Ikoyi"]
+place = random.choice(places)
+print(f"You end up at the {place}.")
+def meet_contacts(characters, health, money):
+print("\n👥 Contacts:")
+for i, c in enumerate(characters):
+print(f"{i+1}. {c['name']}: {c['desc']}")
+contact_choice = int(input("Choose contact (1-3): ")) - 1
+contact = characters[contact_choice]
+if contact['skill'] == "rob":
+print("Tina helps you plan a robbery. +₦500, -10 health risk")
+money += 500
+health -= 10
+elif contact['skill'] == "mechanic":
+print("Olu fixes your car for ₦100. +20 health")
+if money >= 100:
+money -= 100
+health += 20
+else:
+print("😅 Not enough money")
+elif contact['skill'] == "mission":
+print("Chief offers a tough mission. +₦3000, -30 health risk")
+money += 3000
+health -= 30
+return health, money
+def check_bank(money):
+print(f"\n💸 Bank balance: ₦{money}")
+def go_home():
+print("\n🏠 You go home and rest.")
+time.sleep(1)
+print("😴 You sleep and recover some health.")
+return 20
+def main():
+health = 100
+money = 5000
+missions = [
+{"name": "Deliver Package", "reward": 1500, "risk": 10, "desc": "Deliver a package to a contact in Ikoyi."},
+{"name": "Protect VIP", "reward": 3000, "risk": 30, "desc": "Protect a big-shot politician in Lekki."},
+{"name": "Rival Gang Hit", "reward": 5000, "risk": 50, "desc": "Take out a rival gang leader in Ajegunle."}
+]
+characters = [
+{"name": "Tina", "desc": "Your street-smart friend. Can help with robberies.", "skill": "rob"},
+{"name": "Olu", "desc": "A mechanic. Can fix your car for cheaper.", "skill": "mechanic"},
+{"name": "Chief", "desc": "A local gang leader. Offers tough missions.", "skill": "mission"}
+]
+display_intro()
+while health > 0 and money > 0:
+display_status(health, money)
+display_menu()
+choice = input("What's next, Ade? ")
+if choice == "1":
+health, money = hit_store(health, money)
+elif choice == "2":
+money = drive_taxi(money)
+elif choice == "3":
+health, money = visit_mechanic(health, money)
+elif choice == "4":
+health, money = check_missions(missions, health, money)
+elif choice == "5":
+explore_city()
+elif choice == "6":
+health, money = meet_contacts(characters, health, money)
+elif choice == "7":
+check_bank(money)
+elif choice == "8":
+health += go_home()
+else:
+print("😄 Invalid choice")
+print("😵 Game over.")
+if *name* == "*main*":
+main()
